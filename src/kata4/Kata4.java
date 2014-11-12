@@ -8,6 +8,9 @@ public class Kata4 {
 
     public static void main(String[] args) throws SQLException{
         Connection connection= createConnection("people.bd");
+        PersonLoader loader= new DatabasePersonLoader(connection);
+        HistogramBuilder<Person> builder = new HistogramBuilder<>(loader.load());
+        new ConsoleHistogramViewer<Person>().show(builder.build());
     }
 
     private static Connection createConnection(String dbPath) throws SQLException {
